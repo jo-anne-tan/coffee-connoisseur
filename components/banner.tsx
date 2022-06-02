@@ -7,7 +7,10 @@ type Props = {
 
 const Banner: React.FC<Props> = ({ handleOnClick, buttonText }) => {
   return (
-    <div className="z-10 relative m-5">
+    <div
+      className="relative block p-5 rounded-xl w-[80vw] h-96"
+      style={{ backgroundImage: 'url("/static/hero.png")' }}
+    >
       <h1 className="mt-3 text-[60px] font-extrabold">
         Coffee <span className="text-pink-300">Connoisseur</span>
       </h1>
@@ -18,7 +21,7 @@ const Banner: React.FC<Props> = ({ handleOnClick, buttonText }) => {
       >
         {buttonText}
       </button>
-      <div className="absolute -top-5 -left-5 -z-10">
+      {/* <div className="absolute -top-5 -left-5 -z-10">
         <Image
           alt="hero"
           src="/static/hero.png"
@@ -27,7 +30,7 @@ const Banner: React.FC<Props> = ({ handleOnClick, buttonText }) => {
           width={1200}
           height={700}
         />
-      </div>
+      </div> */}
     </div>
   );
 };
