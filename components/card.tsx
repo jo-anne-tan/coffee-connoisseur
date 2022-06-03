@@ -12,7 +12,7 @@ const Card: React.FC<Props> = ({ name, image_url, href }) => {
   return (
     <Link href={href} className=" ">
       <a>
-        <div className={`m-2 p-5 rounded-xl ${glassmorphism}`}>
+        <div className={`p-5 rounded-xl ${glassmorphism}`}>
           <p className="mb-2">{name}</p>
           <Image
             src={image_url}
