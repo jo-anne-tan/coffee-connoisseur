@@ -7,7 +7,7 @@ export default function CoffeeStore() {
   const { id } = router.query;
   return (
     <div>
-      <Link href="/" prefetch={true}>
+      <Link href="/">
         <a>Back to Home</a>
       </Link>
       <h1>Coffee Store Page {id}</h1>
