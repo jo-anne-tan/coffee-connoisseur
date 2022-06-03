@@ -1,10 +1,9 @@
-import type { NextPage } from "next";
 import Head from "next/head";
 import Banner from "../components/banner";
 import Card from "../components/card";
-import coffeeStores from "../data/coffee-stores.json";
+import coffeeStoresData from "../data/coffee-stores.json";
 
-const Home: NextPage = () => {
+const Home: React.FC<Props> = ({ coffeeStores }) => {
   return (
     <div className="">
       <Head>
@@ -17,18 +16,42 @@ const Home: NextPage = () => {
         }}
         buttonText={"View stores nearby"}
       />
-      <div className="mt-5 grid gap-10 md:grid-cols-2 lg:grid-cols-3 justify-center">
-        {coffeeStores.map((store, index) => (
-          <Card
-            key={index}
-            name={store.name}
-            image_url={store.imgUrl}
-            href={`/coffee-store/${store.id}`}
-          />
-        ))}
-      </div>
+      {coffeeStores.length > 0 && (
+        <div className="mt-5 grid gap-10 md:grid-cols-2 lg:grid-cols-3 justify-center">
+          <h2 className="col-span-full text-3xl text-gray-800">
+            Toronto Coffee Stores
+          </h2>
+          {coffeeStores.map((store, index) => (
+            <Card
+              key={index}
+              name={store.name}
+              image_url={store.imgUrl}
+              href={`/coffee-store/${store.id}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
 export default Home;
+
+export async function getStaticProps() {
+  return {
+    props: {
+      coffeeStores: coffeeStoresData,
+    }, // will be passed to the page component as props
+  };
+}
+
+type Props = {
+  coffeeStores: {
+    id: number;
+    name: string;
+    imgUrl: string;
+    websiteUrl: string;
+    address: string;
+    neighbourhood: string;
+  }[];
+};
