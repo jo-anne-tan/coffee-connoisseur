@@ -10,11 +10,6 @@ export default function CoffeeStore() {
       <Link href="/" prefetch={true}>
         <a>Back to Home</a>
       </Link>
-      {id && (
-        <Link href={`/coffee-store/${Number(id) + 1}`} prefetch={true}>
-          <a>Go to page dynamic</a>
-        </Link>
-      )}
       <h1>Coffee Store Page {id}</h1>
     </div>
   );
