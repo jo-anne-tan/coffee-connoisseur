@@ -10,6 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "50%",
+        height: "100%",
       }}
     >
       <Component {...pageProps} />
