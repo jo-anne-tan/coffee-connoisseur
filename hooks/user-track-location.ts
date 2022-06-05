@@ -5,7 +5,7 @@ const useTrackLocation = () => {
   const [latlong, setLatlong] = useState("");
   const [isFindingLocation, setIsFindingLocation] = useState(false);
 
-  const success = (position) => {
+  const success: PositionCallback = (position) => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     setLocationErrorMessage("");
@@ -13,7 +13,7 @@ const useTrackLocation = () => {
     setIsFindingLocation(false);
   };
 
-  const error = () => {
+  const error: PositionErrorCallback = () => {
     setIsFindingLocation(false);
     setLocationErrorMessage("Unable to retrieve your location");
   };
