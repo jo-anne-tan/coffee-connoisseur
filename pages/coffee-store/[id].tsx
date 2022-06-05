@@ -2,7 +2,6 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { glassmorphism } from "../../lib/glassmorphism";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
 import {
   LocationMarkerIcon,
@@ -41,10 +40,7 @@ const CoffeeStore: React.FC<Props> = ({ coffeeStore }) => {
               {coffeeStore?.name}
             </h1>
             <Image
-              src={
-                // TODO: add image
-                "https://images.unsplash.com/photo-1518057111178-44a106bad636?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80"
-              }
+              src={coffeeStore.image}
               alt="coffee shop"
               height={500}
               width={800}

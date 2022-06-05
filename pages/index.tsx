@@ -29,10 +29,7 @@ const Home: React.FC<Props> = ({ coffeeStores }) => {
             <Card
               key={index}
               name={store.name}
-              image_url={
-                // TODO: add image
-                "https://images.unsplash.com/photo-1518057111178-44a106bad636?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80"
-              }
+              image_url={store.image}
               href={`/coffee-store/${store.fsq_id}`}
             />
           ))}
