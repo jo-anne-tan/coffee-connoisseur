@@ -3,14 +3,14 @@ import { createApi } from "unsplash-js";
 
 // init unsplash
 const unsplashApi = createApi({
-  accessKey: process.env.UNSPLASH_ACCESS_KEY,
+  accessKey: process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY,
 });
 
-const getlistOfCoffeeStorePhotos = async () => {
+const getlistOfCoffeeStorePhotos = async (limit: number) => {
   const unsplashResponse = await unsplashApi.search.getPhotos({
     query: "coffee shop",
     page: 1,
-    perPage: 10,
+    perPage: limit,
   });
 
   const unsplashResults = unsplashResponse.response.results;
@@ -24,18 +24,17 @@ const getUrlForCoffeeStores = (
 ) => {
   return `https://api.foursquare.com/v3/places/search?query=${query}&ll=${latlong}&limit=${limit}`;
 };
-export const fetchCoffeeStores = async (): Promise<CoffeeStore[]> => {
-  const photos = await getlistOfCoffeeStorePhotos();
+export const fetchCoffeeStores = async (
+  latlong: string = "3.145166753749924,101.70840200741333",
+  limit: string = "12"
+): Promise<CoffeeStore[]> => {
+  const photos = await getlistOfCoffeeStorePhotos(Number(limit));
   const response = await fetch(
-    getUrlForCoffeeStores(
-      "coffee",
-      "3.145166753749924,101.70840200741333",
-      "6"
-    ),
+    getUrlForCoffeeStores("coffee", latlong, limit),
     {
       method: "GET",
       headers: {
-        Authorization: process.env.FOURSQUARE_API_KEY,
+        Authorization: process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY,
       },
     }
   );
