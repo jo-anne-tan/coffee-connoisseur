@@ -1,4 +1,5 @@
 export type CoffeeStore = {
+  image: string;
   categories: {
     id: number;
     name: string;
