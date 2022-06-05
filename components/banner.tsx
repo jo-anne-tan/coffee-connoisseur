@@ -1,9 +1,10 @@
 type Props = {
   handleOnClick: () => void;
   buttonText: string;
+  error: string;
 };
 
-const Banner: React.FC<Props> = ({ handleOnClick, buttonText }) => {
+const Banner: React.FC<Props> = ({ handleOnClick, buttonText, error }) => {
   return (
     <div className="relative block p-5 rounded-xl w-[80vw] h-96 bg-hero">
       <h1 className="mt-3 text-[60px] font-extrabold">
@@ -16,6 +17,7 @@ const Banner: React.FC<Props> = ({ handleOnClick, buttonText }) => {
       >
         {buttonText}
       </button>
+      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 };
