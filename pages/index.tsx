@@ -5,21 +5,16 @@ import Card from "../components/card";
 import { CoffeeStore } from "../data/coffee_store";
 import { fetchCoffeeStores } from "../lib/coffee-stores";
 import useTrackLocation from "../hooks/user-track-location";
-import { StoreContext } from "./_app";
+import { StoreContext } from "../context/store-context";
 
 type Props = {
   coffeeStores: CoffeeStore[];
 };
 
 const Home: React.FC<Props> = ({ coffeeStores }) => {
-  const {
-    handleTrackLocation,
-    // latlong,
-    locationErrorMessage,
-    isFindingLocation,
-  } = useTrackLocation();
+  const { handleTrackLocation, locationErrorMessage, isFindingLocation } =
+    useTrackLocation();
 
-  // const [fetchedStores, setFetchedStores] = useState<CoffeeStore[]>([]);
   const [fetchStoreError, setFetchStoreError] = useState(null);
   const { state, dispatch } = useContext(StoreContext);
 
@@ -31,7 +26,6 @@ const Home: React.FC<Props> = ({ coffeeStores }) => {
         type: "SET_COFFEE_STORES",
         payload: { coffeeStores: fetchedCoffeeStores },
       });
-      // setFetchedStores(fetchedCoffeeStores);
     } catch (error) {
       console.error(error);
       setFetchStoreError(error.message);

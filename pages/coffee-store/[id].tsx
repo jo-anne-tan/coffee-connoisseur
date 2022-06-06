@@ -11,7 +11,7 @@ import {
 import { CoffeeStore } from "../../data/coffee_store";
 import { fetchCoffeeStores } from "../../lib/coffee-stores";
 import { useContext, useEffect, useState } from "react";
-import { StoreContext } from "../_app";
+import { StoreContext } from "../../context/store-context";
 
 type Props = {
   store: CoffeeStore;
@@ -85,9 +85,9 @@ const CoffeeStore: React.FC<Props> = ({ store }) => {
               <StarIcon height={24} width={24} color="white" />
               <p>1</p>
             </div>
-            {/* <button className="mt-3 px-3 py-1 text-white bg-purple-600 active:bg-purple-500">
+            <button className="mt-3 px-3 py-1 text-white bg-purple-600 active:bg-purple-500">
               Upvote
-            </button> */}
+            </button>
           </div>
         </div>
       </div>
