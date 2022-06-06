@@ -57,7 +57,7 @@ const StoreProvider = ({ children }) => {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div
-      className="p-10 h-screen text-gray-700"
+      className="p-10 min-h-screen text-gray-700"
       style={{
         backgroundImage: "url(/static/mesh-gradient.png)",
         backgroundRepeat: "no-repeat",
