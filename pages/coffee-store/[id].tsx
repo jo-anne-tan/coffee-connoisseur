@@ -16,7 +16,6 @@ type Props = {
 };
 const CoffeeStore: React.FC<Props> = ({ coffeeStore }) => {
   const router = useRouter();
-  // const { id } = router.query;
 
   if (router.isFallback) {
     return <p>Loading....</p>;
@@ -71,7 +70,7 @@ const CoffeeStore: React.FC<Props> = ({ coffeeStore }) => {
       </div>
     );
   else {
-    return <div />;
+    return <div className="h-screen" />;
   }
 };
 export default CoffeeStore;
