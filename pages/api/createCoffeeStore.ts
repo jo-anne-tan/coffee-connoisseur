@@ -32,7 +32,7 @@ const createCoffeeStore: NextApiHandler = async (req, res) => {
         address,
         neighbourhood,
         image_url,
-        voting,
+        voting: 0,
       });
       const coffee_store = getMinifiedRecord(record);
 
