@@ -21,11 +21,17 @@ const Home: React.FC<Props> = ({ coffeeStores }) => {
   const fetchStores = async (latlong: string) => {
     try {
       setFetchStoreError("");
-      const fetchedCoffeeStores = await fetchCoffeeStores(latlong, "30");
+      const response = await fetch(
+        `/api/getCoffeeStoresByLocation?latLong=${latlong}&limit=${30}`
+      );
+
+      const coffeeStores = (await response.json()).coffeeStores;
+
       dispatch({
         type: "SET_COFFEE_STORES",
-        payload: { coffeeStores: fetchedCoffeeStores },
+        payload: { coffeeStores },
       });
+      setFetchStoreError("");
     } catch (error) {
       console.error(error);
       setFetchStoreError(error.message);
