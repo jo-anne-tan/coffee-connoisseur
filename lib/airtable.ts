@@ -11,4 +11,19 @@ const getMinifiedRecords = (records: Records<FieldSet>) =>
 
 const getMinifiedRecord = (record: Record<FieldSet>) => ({ ...record.fields });
 
-export { base_coffee_stores, getMinifiedRecords, getMinifiedRecord };
+const filterCoffeeStoreById = async (id: string) => {
+  const data = await base_coffee_stores
+    .select({
+      view: "Grid view",
+      filterByFormula: `id="${id}"`,
+    })
+    .firstPage();
+  return getMinifiedRecords(data);
+};
+
+export {
+  base_coffee_stores,
+  filterCoffeeStoreById,
+  getMinifiedRecords,
+  getMinifiedRecord,
+};

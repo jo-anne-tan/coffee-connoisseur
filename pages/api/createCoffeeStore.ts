@@ -1,6 +1,7 @@
 import { NextApiHandler } from "next";
 import {
   base_coffee_stores,
+  filterCoffeeStoreById,
   getMinifiedRecord,
   getMinifiedRecords,
 } from "../../lib/airtable";
@@ -16,16 +17,10 @@ const createCoffeeStore: NextApiHandler = async (req, res) => {
 
   try {
     // ------ find coffee store by id
-    const data = await base_coffee_stores
-      .select({
-        view: "Grid view",
-        filterByFormula: `id="${id}"`,
-      })
-      .firstPage();
-
-    if (data.length === 0) {
+    const coffeeStore = await filterCoffeeStoreById(id.toString());
+    if (coffeeStore.length === 0) {
       // ------ if it doesn't exists, create coffee store
-      // console.log("create");
+      console.log("create");
       const record = await base_coffee_stores.create({
         id,
         name,
@@ -39,8 +34,8 @@ const createCoffeeStore: NextApiHandler = async (req, res) => {
       return res.json({ coffee_store });
     } else {
       // if it exists, return existing
-      // console.log("return existing");
-      const coffee_store = getMinifiedRecords(data);
+      console.log("return existing");
+      const coffee_store = coffeeStore[0];
       return res.json({ coffee_store });
     }
   } catch (error) {
