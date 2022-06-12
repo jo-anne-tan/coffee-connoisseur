@@ -15,7 +15,10 @@ const Card: React.FC<Props> = ({ name, image_url, href }) => {
         <div className={`p-5 rounded-xl ${glassmorphism}`}>
           <p className="mb-2">{name}</p>
           <Image
-            src={image_url}
+            src={
+              image_url ??
+              "https://images.unsplash.com/photo-1498804103079-a6351b050096?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80"
+            }
             alt="coffee store"
             height={200}
             width={200}

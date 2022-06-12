@@ -1,9 +1,9 @@
-import { CoffeeStore } from "../data/coffee_store";
+import { CoffeeStore, CoffeeStoreAirtable } from "../data/coffee_store";
 import { createApi } from "unsplash-js";
 
 // init unsplash
 const unsplashApi = createApi({
-  accessKey: process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY,
+  accessKey: process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY ?? "",
 });
 
 const getlistOfCoffeeStorePhotos = async (limit: number) => {
@@ -13,8 +13,8 @@ const getlistOfCoffeeStorePhotos = async (limit: number) => {
     perPage: limit,
   });
 
-  const unsplashResults = unsplashResponse.response.results;
-  const images = unsplashResults.map((result) => result.urls["small"]);
+  const unsplashResults = unsplashResponse.response?.results;
+  const images = unsplashResults?.map((result) => result.urls["small"]) ?? [];
   return images;
 };
 const getUrlForCoffeeStores = (
@@ -27,21 +27,52 @@ const getUrlForCoffeeStores = (
 export const fetchCoffeeStores = async (
   latlong: string = "3.145166753749924,101.70840200741333",
   limit: string = "12"
-): Promise<CoffeeStore[]> => {
+): Promise<CoffeeStoreAirtable[]> => {
   const photos = await getlistOfCoffeeStorePhotos(Number(limit));
+  const headers = new Headers({
+    Authorization: process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY ?? "",
+  });
+  // headers.set(
+  //   "Authorization",
+  //   process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY ?? ""
+  // );
   const response = await fetch(
     getUrlForCoffeeStores("coffee", latlong, limit),
     {
       method: "GET",
-      headers: {
-        Authorization: process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY,
-      },
+      headers,
     }
   );
   const json = await response.json();
-  const data = json.results.map((results, index) => ({
-    ...results,
-    image: photos[index],
-  }));
-  return data;
+  const data: CoffeeStore[] = json.results.map(
+    (results: CoffeeStore, index: number) => ({
+      ...results,
+      image: photos[index],
+    })
+  );
+
+  if (data && data.length > 0) {
+    // console.log({ data });
+    const stores: CoffeeStoreAirtable[] = data.map((d: CoffeeStore) =>
+      CoffeeStoreAirtableFormatter(d)
+    );
+    return stores;
+  } else return [];
+};
+
+export const CoffeeStoreAirtableFormatter = (
+  coffeeStore: CoffeeStore
+): CoffeeStoreAirtable => {
+  // console.log({ location: coffeeStore.location });
+  return {
+    id: coffeeStore.fsq_id,
+    name: coffeeStore.name,
+    address: coffeeStore.location?.formatted_address,
+    neighbourhood:
+      coffeeStore.location?.neighborhood?.length > 0
+        ? coffeeStore.location.neighborhood[0]
+        : "",
+    voting: 0,
+    image_url: coffeeStore.image ?? "",
+  };
 };

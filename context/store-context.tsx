@@ -1,14 +1,18 @@
 import { createContext, Dispatch, useReducer } from "react";
-import { CoffeeStore } from "../data/coffee_store";
+import { CoffeeStore, CoffeeStoreAirtable } from "../data/coffee_store";
+import { CoffeeStoreAirtableFormatter } from "../lib/coffee-stores";
 
 type StoreContextType = {
   latLong: string;
-  coffeeStores: CoffeeStore[];
+  coffeeStores: CoffeeStoreAirtable[];
 };
 
 type Action =
   | { type: "SET_LAT_LONG"; payload: { latLong: string } }
-  | { type: "SET_COFFEE_STORES"; payload: { coffeeStores: CoffeeStore[] } };
+  | {
+      type: "SET_COFFEE_STORES";
+      payload: { coffeeStores: CoffeeStoreAirtable[] };
+    };
 
 const initialState: StoreContextType = {
   latLong: "",
@@ -23,7 +27,10 @@ export const StoreContext = createContext<{
   dispatch: () => null,
 });
 
-const StoreProvider = ({ children }) => {
+type Props = {
+  children?: React.ReactNode;
+};
+const StoreProvider: React.FC<Props> = ({ children }) => {
   const initValue = { ...initialState };
 
   const storeReducer = (
@@ -43,7 +50,7 @@ const StoreProvider = ({ children }) => {
     }
   };
 
-  const [state, dispatch] = useReducer(storeReducer, initialState);
+  const [state, dispatch] = useReducer(storeReducer, initValue);
 
   return (
     <StoreContext.Provider value={{ state, dispatch }}>

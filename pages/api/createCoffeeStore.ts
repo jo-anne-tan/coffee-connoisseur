@@ -20,7 +20,7 @@ const createCoffeeStore: NextApiHandler = async (req, res) => {
     const coffeeStore = await filterCoffeeStoreById(id.toString());
     if (coffeeStore.length === 0) {
       // ------ if it doesn't exists, create coffee store
-      console.log("create");
+      // console.log("create");
       const record = await base_coffee_stores.create({
         id,
         name,
@@ -34,7 +34,7 @@ const createCoffeeStore: NextApiHandler = async (req, res) => {
       return res.json({ coffee_store });
     } else {
       // if it exists, return existing
-      console.log("return existing");
+      // console.log("return existing");
       const coffee_store = coffeeStore[0];
       return res.json({ coffee_store });
     }

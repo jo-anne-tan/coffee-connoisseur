@@ -1,5 +1,14 @@
+export type CoffeeStoreAirtable = {
+  id: string;
+  name: string;
+  address: string;
+  neighbourhood: string;
+  voting: number;
+  image_url: string;
+};
+
 export type CoffeeStore = {
-  image: string;
+  image?: string;
   categories: {
     id: number;
     name: string;

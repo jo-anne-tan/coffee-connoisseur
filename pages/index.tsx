@@ -2,20 +2,20 @@ import Head from "next/head";
 import { useContext, useEffect, useState } from "react";
 import Banner from "../components/banner";
 import Card from "../components/card";
-import { CoffeeStore } from "../data/coffee_store";
+import { CoffeeStoreAirtable } from "../data/coffee_store";
 import { fetchCoffeeStores } from "../lib/coffee-stores";
 import useTrackLocation from "../hooks/user-track-location";
 import { StoreContext } from "../context/store-context";
 
 type Props = {
-  coffeeStores: CoffeeStore[];
+  coffeeStores: CoffeeStoreAirtable[];
 };
 
 const Home: React.FC<Props> = ({ coffeeStores }) => {
   const { handleTrackLocation, locationErrorMessage, isFindingLocation } =
     useTrackLocation();
 
-  const [fetchStoreError, setFetchStoreError] = useState(null);
+  const [fetchStoreError, setFetchStoreError] = useState<string>("");
   const { state, dispatch } = useContext(StoreContext);
 
   const fetchStores = async (latlong: string) => {
@@ -25,16 +25,17 @@ const Home: React.FC<Props> = ({ coffeeStores }) => {
         `/api/getCoffeeStoresByLocation?latLong=${latlong}&limit=${30}`
       );
 
-      const coffeeStores = (await response.json()).coffeeStores;
+      const coffeeStores: CoffeeStoreAirtable[] = (await response.json())
+        .coffeeStores;
 
       dispatch({
         type: "SET_COFFEE_STORES",
         payload: { coffeeStores },
       });
       setFetchStoreError("");
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      setFetchStoreError(error.message);
+      setFetchStoreError(error.message.toString());
     }
   };
 
@@ -65,8 +66,8 @@ const Home: React.FC<Props> = ({ coffeeStores }) => {
             <Card
               key={index}
               name={store.name}
-              image_url={store.image}
-              href={`/coffee-store/${store.fsq_id}`}
+              image_url={store.image_url}
+              href={`/coffee-store/${store.id}`}
             />
           ))}
         </div>
@@ -80,8 +81,8 @@ const Home: React.FC<Props> = ({ coffeeStores }) => {
             <Card
               key={index}
               name={store.name}
-              image_url={store.image}
-              href={`/coffee-store/${store.fsq_id}`}
+              image_url={store.image_url}
+              href={`/coffee-store/${store.id}`}
             />
           ))}
         </div>
