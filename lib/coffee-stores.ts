@@ -32,10 +32,6 @@ export const fetchCoffeeStores = async (
   const headers = new Headers({
     Authorization: process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY ?? "",
   });
-  // headers.set(
-  //   "Authorization",
-  //   process.env.NEXT_PUBLIC_FOURSQUARE_API_KEY ?? ""
-  // );
   const response = await fetch(
     getUrlForCoffeeStores("coffee", latlong, limit),
     {
@@ -52,7 +48,6 @@ export const fetchCoffeeStores = async (
   );
 
   if (data && data.length > 0) {
-    // console.log({ data });
     const stores: CoffeeStoreAirtable[] = data.map((d: CoffeeStore) =>
       CoffeeStoreAirtableFormatter(d)
     );
@@ -63,7 +58,6 @@ export const fetchCoffeeStores = async (
 export const CoffeeStoreAirtableFormatter = (
   coffeeStore: CoffeeStore
 ): CoffeeStoreAirtable => {
-  // console.log({ location: coffeeStore.location });
   return {
     id: coffeeStore.fsq_id,
     name: coffeeStore.name,
@@ -74,5 +68,6 @@ export const CoffeeStoreAirtableFormatter = (
         : "",
     voting: 0,
     image_url: coffeeStore.image ?? "",
+    recordId: "",
   };
 };

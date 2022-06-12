@@ -5,6 +5,7 @@ export type CoffeeStoreAirtable = {
   neighbourhood: string;
   voting: number;
   image_url: string;
+  recordId: string;
 };
 
 export type CoffeeStore = {

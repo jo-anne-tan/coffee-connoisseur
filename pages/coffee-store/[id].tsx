@@ -22,6 +22,8 @@ const CoffeeStorePage: React.FC<Props> = ({ store }) => {
   const [coffeeStore, setCoffeeStore] = useState<CoffeeStoreAirtable | null>(
     store
   );
+
+  const [voting, setVoting] = useState(coffeeStore?.voting ?? 0);
   const {
     state: { latLong },
   } = useContext(StoreContext);
@@ -31,7 +33,6 @@ const CoffeeStorePage: React.FC<Props> = ({ store }) => {
   const { data, error } = useSWR<{ coffeeStore: CoffeeStoreAirtable }>(
     `/api/getCoffeeStoreById?id=${id}`
   );
-  console.log(data);
 
   useEffect(() => {
     if (data && data.coffeeStore) {
@@ -57,8 +58,19 @@ const CoffeeStorePage: React.FC<Props> = ({ store }) => {
       }),
     });
   };
+
+  const upvoteCoffeeStore = async () => {
+    if (voting || voting === 0) {
+      setVoting(voting + 1);
+      const response = await fetch(`/api/upvoteCoffeeStore?id=${id}`, {
+        method: "PUT",
+      });
+      const storeUpdated = await response.json();
+      setCoffeeStore(storeUpdated);
+    }
+  };
   useEffect(() => {
-    if (store === null) {
+    if (!store) {
       const fetchStore = async () => {
         const coffeeStores = await fetchCoffeeStores(latLong, "30");
         const storeFromContext = coffeeStores.find((store) => store.id === id);
@@ -72,11 +84,13 @@ const CoffeeStorePage: React.FC<Props> = ({ store }) => {
       fetchStore().catch((e) => console.error(e));
     } else {
       findOrCreateStore(store);
-      // setCoffeeStore(store);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, store]);
 
+  useEffect(() => {
+    if (coffeeStore && coffeeStore.voting) setVoting(coffeeStore.voting);
+  }, [coffeeStore]);
   if (error) {
     console.error(error);
     return <div>Something went wrong retrieving coffee Store</div>;
@@ -128,9 +142,12 @@ const CoffeeStorePage: React.FC<Props> = ({ store }) => {
           )}
           <div className="flex gap-x-3 mb-3">
             <StarIcon height={24} width={24} color="white" />
-            <p>1</p>
+            <p>{voting}</p>
           </div>
-          <button className="mt-3 px-3 py-1 text-white bg-purple-600 active:bg-purple-500">
+          <button
+            className="mt-3 px-3 py-1 text-white bg-purple-600 active:bg-purple-500"
+            onClick={upvoteCoffeeStore}
+          >
             Upvote
           </button>
         </div>
