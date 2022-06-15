@@ -37,7 +37,7 @@ const StoreProvider: React.FC<Props> = ({ children }) => {
     state: StoreContextType,
     action: Action
   ): StoreContextType => {
-    console.log(action);
+    // console.log(action);
     switch (action.type) {
       case "SET_LAT_LONG": {
         return { ...state, latLong: action.payload.latLong };
