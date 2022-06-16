@@ -127,7 +127,7 @@ const CoffeeStorePage: React.FC<Props> = ({ store }) => {
             className="rounded-xl w-full h-full"
           />
         </div>
-        <div className="flex flex-col self-center justify-self-start p-10 rounded-xl bg-white bg-opacity-30 hover:bg-opacity-60   bg-clip-padding backdrop-filter backdrop-blur-lg">
+        <div className="flex flex-col self-center justify-self-start p-10 rounded-xl bg-white bg-opacity-30 hover:bg-opacity-60 bg-clip-padding backdrop-filter backdrop-blur-lg">
           {coffeeStore?.address && (
             <div className="flex gap-x-3 mb-3">
               <LocationMarkerIcon height={24} width={24} color="white" />

@@ -11,17 +11,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       <SWRConfig
         value={{ fetcher: (url) => fetch(url).then((res) => res.json()) }}
       >
-        <div
-          className="p-10 min-h-screen text-gray-700 overflow-hidden border-2 border-red-500"
-          // style={{
-          //   backgroundImage: "url(/static/mesh-gradient.png)",
-          //   backgroundRepeat: "no-repeat",
-          //   backgroundSize: "cover",
-          //   backgroundPosition: "50%",
-          //   height: "100%",
-          // }}
-        >
-          <div className="fixed h-screen w-screen -z-1">
+        <div className="p-10 min-h-screen text-gray-700">
+          <div className="fixed top-0 left-0 h-screen w-screen -z-10 overflow-hidden">
             <Image
               src="/static/mesh-gradient.png"
               alt="gradient background"
