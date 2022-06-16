@@ -50,6 +50,10 @@ const Home: React.FC<Props> = ({ coffeeStores }) => {
       <Head>
         <title>Coffee Connoisseur</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="description"
+          content="shows a list of coffee stores in Kuala Lumpur, Malaysia"
+        />
       </Head>
       <Banner
         handleOnClick={handleTrackLocation}

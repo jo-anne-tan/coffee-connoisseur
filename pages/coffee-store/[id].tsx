@@ -103,6 +103,12 @@ const CoffeeStorePage: React.FC<Props> = ({ store }) => {
     <div>
       <Head>
         <title>{coffeeStore?.name}</title>
+        <meta
+          name="description"
+          content={`shows ${
+            coffeeStore?.name ?? "a specific coffee store"
+          } page`}
+        />
       </Head>
       <Link href="/">
         <a className="font-extrabold flex items-center">
