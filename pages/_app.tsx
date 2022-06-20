@@ -1,9 +1,18 @@
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
+import type { AppProps, NextWebVitalsMetric } from "next/app";
 import StoreProvider from "../context/store-context";
 import { SWRConfig } from "swr";
 import React from "react";
 import Image from "next/image";
+
+export function reportWebVitals(metric: NextWebVitalsMetric) {
+  if (metric.label === "web-vital") {
+    console.log("web-vitals:");
+    console.log(metric); // The metric object ({ id, name, startTime, value, label }) is logged to the console
+  } else {
+    console.log(metric);
+  }
+}
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

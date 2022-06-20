@@ -24,6 +24,7 @@ const Banner: React.FC<Props> = ({ handleOnClick, buttonText, error }) => {
       </div>
       <div className=" h-full w-full rounded-xl absolute top-0 -z-10">
         <Image
+          priority
           className="rounded-xl"
           src="/static/hero.png"
           alt="hero"
